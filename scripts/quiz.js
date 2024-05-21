@@ -64,7 +64,6 @@ function startQuiz() {
 // what tf
 // viser spørgsmålene
 function showQuestion() {
-    console.log("showQuestion() function called"); // Add this line for logging
     resetState();
     let currentQuestion = questions[currentQuestionIndex];
     let questionNo = currentQuestionIndex + 1;
@@ -72,7 +71,6 @@ function showQuestion() {
 
 // tilføjer svarmuligheder
 currentQuestion.answers.forEach(answer => {
-    console.log("Answer:", answer.text); // Add this line for logging
 const button = document.createElement('button');
 button.innerHTML = answer.text;
 button.classList.add('btn');
@@ -111,7 +109,7 @@ function selectAnswer(e) {
 
 function showScore() {
     resetState();
-    questionElement.innerHTML = `You answered ${score} out of ${questions.length} questions correctly!`;
+    questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!';
     nextButton.innerHTML = "Play Again?";
     nextButton.style.display = "block";
 }
@@ -126,9 +124,12 @@ function handleNextButton() {
 }
 
 nextButton.addEventListener('click', () => {
-    if(currentQuestionIndex < questions.length - 1) {
-        handleNextButton();
-    } else {
+    if (nextButton.innerHTML === "Play Again?") {
         startQuiz();
+    } else {
+        handleNextButton();
     }
 });
+
+
+startQuiz();
