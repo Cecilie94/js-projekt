@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="assets/weatherStyle.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body>
+    <div class="card">
+      <div class="search">
+        <input type="text" placeholder="input city name" spellcheck="false" />
+        <button>
+          <span class="material-symbols-outlined"> search </span>
+        </button>
+        <div class="error">
+          <p>City not found</p>
+        </div>
+      </div>
+
+      <div class="weather">
+        <img src="assets/images/sunny.svg" class="weather-icon" />
+        <h1 class="temp">18°C</h1>
+        <h2 class="city">Odense</h2>
+        <div class="details">
+          <div class="col">
+            <img src="assets/images/humidity.svg" />
+            <div>
+              <p class="humidity">50%</p>
+              <p>Humidity</p>
+            </div>
+          </div>
+          <div class="col">
+            <img src="assets/images/windy.svg" />
+            <div>
+              <p class="wind">5km/h</p>
+              <p>Wind Speed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const apiKey = "b16924c2177c749345d878c04c4213cf"; // api key til openweathermap
+      const apiUrl =
+        "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+        // api url til vejr data
+
+      const searchBox = document.querySelector(".search input");
+      const searchBtn = document.querySelector(".search button");
+      const weatherIcon = document.querySelector(".weather-icon");
+
+      // function til at hente vejr data fra api
+      async function checkWeather(city) {
+        const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+        // response henter data fra api url og city name
+
+        if (response.status === 404) {
+          document.querySelector(".error").style.display = "block";
+          document.querySelector(".weather").style.display = "none";
+          // hvis api response er 404, viser den ikke vejr data
+        } else {
+          const data = await response.json();
+          console.log(data);
+          // when status code is not 404, it will display the weather data
+
+          // opdaterer vejr data på siden
+          document.querySelector(".city").innerText = data.name;
+          // updates city name
+          document.querySelector(".temp").innerText =
+            Math.round(data.main.temp) + "°C";
+          // math.round rounds the temperature to the nearest whole number
+          document.querySelector(".humidity").innerText =
+            data.main.humidity + "%";
+          document.querySelector(".wind").innerText = data.wind.speed + "km/h";
+
+          // tjekker vejr status fra main og opdaterer vejr ikon
+          if (data.weather[0].main === "Clear") {
+            document.querySelector(".weather-icon").src =
+              "assets/images/sunny.svg";
+          } else if (data.weather[0].main === "Clouds") {
+            document.querySelector(".weather-icon").src =
+              "assets/images/cloudy.svg";
+          } else if (data.weather[0].main === "Rain") {
+            document.querySelector(".weather-icon").src =
+              "assets/images/rainy.svg";
+          } else if (data.weather[0].main === "Snow") {
+            document.querySelector(".weather-icon").src =
+              "assets/images/snowy.svg";
+          }
+          // checks weather status from main and updates the weather icon
+
+          document.querySelector(".weather").style.display = "block";
+          // displays weather data from city when searched
+        }
+      }
+
+      // event listener til søge knap
+      searchBtn.addEventListener("click", () => {
+        checkWeather(searchBox.value);
+        // gives city name from input and passes it to the checkweather
+      });
+      checkWeather();
+      // displays the weather data in console
+    </script>
+  </body>
+</html>

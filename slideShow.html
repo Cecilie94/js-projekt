@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Slide Show</title>
+        <link rel="stylesheet" href="/assets/slideShow.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+<div class="gallery-wrap">
+    <img src="assets/images/arrow-back.png" id="backBtn">
+    <div class="gallery">
+        <div>
+            <span><img src="assets/images/img1.jpg"></span>
+            <span><img src="assets/images/img3.jpg"></span>
+            <span><img src="assets/images/img4.jpg"></span>
+        </div>
+        <div>
+            <span><img src="assets/images/img5.jpg"></span>
+            <span><img src="assets/images/img6.jpg"></span>
+            <span><img src="assets/images/img7.jpg"></span>
+        </div>
+       <!-- <div>
+            <span><img src="assets/images/img8.jpg"></span>
+            <span><img src="assets/images/img9.jpg"></span>
+            <span><img src="assets/images/img10.jpg"></span>
+        </div> -->
+    </div>
+    <img src="/assets/images/arrow-next.png" id="nextBtn">
+</div>
+
+</div>
+
+
+<script>
+    // select scroll container og nav knapper
+let scrollContainer = document.querySelector('.gallery');
+// scroll container vælger element med class 'gallery' og ID element for knapper 
+let backBtn = document.getElementById("backBtn");
+let nextBtn = document.getElementById("nextBtn");
+
+// event listener til scroll container på mousewheel
+scrollContainer.addEventListener("wheel", (evt) => {
+    evt.preventDefault(); // forhindrer default scroll
+    scrollContainer.scrollLeft += evt.deltaY; // 
+    scrollContainer.style.scrollBehavior = "auto";
+});
+
+// event listener til back og next knapper
+nextBtn.addEventListener("click", () => {
+    scrollContainer.style.scrollBehavior = "smooth"; // gør scroll smooth
+    scrollContainer.scrollLeft += 900; // scroll 900px til højre
+});
+backBtn.addEventListener("click", () => {
+    scrollContainer.style.scrollBehavior = "smooth";
+    scrollContainer.scrollLeft -= 900;
+});
+
+</script>
+    </body>
+</html>
