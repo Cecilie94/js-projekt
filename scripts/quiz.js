@@ -73,7 +73,7 @@ currentQuestion.answers.forEach(answer => {
 const button = document.createElement('button');
 button.innerHTML = answer.text;
 button.classList.add('btn');
-answerButtons.appendChild(button); // tilføjer svar knappen til div'en
+answerButtons.appendChild(button); // tilføjer svar knappen til answer-buttons div
 if(answer.correct) {
     button.dataset.correct = answer.correct;
 }
@@ -88,6 +88,8 @@ function resetState() {
         answerButtons.removeChild(answerButtons.firstChild);
     }
 }
+
+// tjekker om svaret er korrekt
 function selectAnswer(e) {
     const selectedBtn = e.target;
     const isCorrect = selectedBtn.dataset.correct === "true";
@@ -97,6 +99,7 @@ function selectAnswer(e) {
     } else {
         selectedBtn.classList.add('incorrect');
     }
+    // tjekker  om svaret er korrekt og tilføjer class til korrekt svar
     Array.from(answerButtons.children).forEach(button => {
         if(button.dataset.correct === "true") {
             button.classList.add('correct');
@@ -111,10 +114,10 @@ function showScore() {
     resetState();
     questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!';
     nextButton.innerHTML = "Play Again?";
-    nextButton.style.display = "block";
+    nextButton.style.display = "hiden";
 }
 
-// funktion til at håndtere næste knap
+// tjekker om der er flere spørgsmål
 function handleNextButton() {
     currentQuestionIndex++;
     if(currentQuestionIndex < questions.length) {
