@@ -61,7 +61,6 @@ function startQuiz() {
     nextButton.innerHTML = "Next";
     showQuestion();
 }
-// what tf
 // viser spørgsmålene
 function showQuestion() {
     resetState();
@@ -69,7 +68,7 @@ function showQuestion() {
     let questionNo = currentQuestionIndex + 1;
     questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
 
-// tilføjer svarmuligheder
+// forEach-loop tilføjer svarmuligheder
 currentQuestion.answers.forEach(answer => {
 const button = document.createElement('button');
 button.innerHTML = answer.text;
@@ -107,6 +106,7 @@ function selectAnswer(e) {
     nextButton.style.display = 'block';
 }
 
+// viser scoren
 function showScore() {
     resetState();
     questionElement.innerHTML = 'You scored ' + score + ' out of ' + questions.length + '!';
@@ -114,6 +114,7 @@ function showScore() {
     nextButton.style.display = "block";
 }
 
+// funktion til at håndtere næste knap
 function handleNextButton() {
     currentQuestionIndex++;
     if(currentQuestionIndex < questions.length) {
@@ -123,6 +124,7 @@ function handleNextButton() {
     }
 }
 
+// eventlistener til næste knap hvis nextButton er = Play Again
 nextButton.addEventListener('click', () => {
     if (nextButton.innerHTML === "Play Again?") {
         startQuiz();
@@ -130,6 +132,5 @@ nextButton.addEventListener('click', () => {
         handleNextButton();
     }
 });
-
 
 startQuiz();
